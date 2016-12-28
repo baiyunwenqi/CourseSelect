@@ -3,7 +3,12 @@ class CoursesController < ApplicationController
   before_action :student_logged_in, only: [:select, :quit, :list]
   before_action :teacher_logged_in, only: [:new, :create, :edit, :destroy, :update]
   before_action :logged_in, only: :index
-
+#/-------------------------------------------------liwenqi add these comments-
+  def show_owned
+    @course=current_user.courses
+    #对课程进行排序
+    @course=@course.sort_by{|e| e[:course_time]}
+  end
   #-------------------------for teachers----------------------
 
   def new
@@ -59,7 +64,8 @@ end
   def list
     @course=Course.all
     @course=@course.where(:open=>"true")-current_user.courses
-    
+     #对课程进行排序
+    @course=@course.sort_by{|e| e[:course_time]}
 
   end
 
