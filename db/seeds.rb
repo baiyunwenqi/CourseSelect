@@ -86,7 +86,8 @@ teacher_map={
     33 => {name: "苏桂平", department: "计算机与控制学院"},
     34 => {name: "张晋连", department: "计算机与控制学院"}
 }
-
+=begin
+源代码
 course_map={
     1 => {course_code: "091M4001H", name: "计算机体系结构", course_type: "专业核心课", credit: "60/3.0", limit_num: "", course_week: "第2-20周", course_time: "周一(9-11)", class_room: "教1-107", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
     2 => {course_code: "091M4002H", name: "计算机网络", course_type: "专业核心课", credit: "60/3.0", limit_num: "", course_week: "第2-20周	", course_time: "周五(2-4)", class_room: "教1-107", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
@@ -123,6 +124,47 @@ course_map={
     33 => {course_code: "093M2007H", name: "数据库新技术", course_type: "一级学科普及课", credit: "40/2.0", limit_num: "", course_week: "第2-12周	", course_time: "周一(3-4)", class_room: "教1-107", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
     34 => {course_code: "09MGX005H", name: "Python语言导论", course_type: "公共选修课", credit: "40/1.0", limit_num: 154, course_week: "第4-14周	", course_time: "周二(7-8)", class_room: "教1-108", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
 }
+=end
+#rivised by liwenqi
+#修改数据库中course_time数据的参数样式有原来的周三(9-11)变为存储时的030911 
+#修改学分和学时结构
+course_map={
+        1 => {course_code: "091M4001H", name: "计算机体系结构", course_type: "专业核心课", credit: 3.0, period:60,limit_num: 1, course_week: "第2-20周", course_time: "010911", class_room: "教1-107", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        2 => {course_code: "091M4002H", name: "计算机网络", course_type: "专业核心课", credit: 3.0, period:60, limit_num: 1, course_week: "第2-20周	", course_time: "050204", class_room: "教1-107", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        3 => {course_code: "091M4021H-1", name: "高级软件工程", course_type: "一级学科核心课", credit: 3.0, period:60, limit_num: "", course_week: "第2-20周	", course_time: "040911", class_room: "教1-109", teaching_type: "授课、讨论	", exam_type: "闭卷笔试"},
+        4 => {course_code: "091M4021H-2", name: "高级软件工程", course_type: "一级学科核心课", credit: 3.0, period:60, limit_num: "", course_week: "第2-20周	", course_time: "030911", class_room: "教1-109", teaching_type: "授课、讨论	", exam_type: "闭卷笔试"},
+        5 => {course_code: "091M4023H", name: "数理逻辑与程序理论", course_type: "专业核心课", credit: 3.0, period:60, limit_num: "", course_week: "第2-20周	", course_time: "020507", class_room: "教1-113", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        6 => {course_code: "091M4041H", name: "计算机算法设计与分析", course_type: "专业核心课", credit: 3.0, period:60, limit_num: 250, course_week: "第2-20周	", course_time: "050204", class_room: "教1-101", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        7 => {course_code: "091M4042H", name: "模式识别与机器学习", course_type: "专业核心课", credit: 3.0, period:60, limit_num: 450, course_week: "第2-20周	", course_time: "010507", class_room: "教1-102", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        8 => {course_code: "091M4043H", name: "高级人工智能", course_type: "专业核心课", credit: 3.0, period:60, limit_num: "", course_week: "第2-20周", course_time: "020911", class_room: "教1-107", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        9 => {course_code: "091M5001H", name: "VLSI测试与可测试性设计", course_type: "专业普及课", credit: 2.0, period:40, limit_num: "", course_week: "第2-16周	", course_time: "020911", class_room: "教1-109", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        10 => {course_code: "091M5004H", name: "超大规模集成电路基础", course_type: "专业普及课", credit: 2.0, period:40, limit_num: "", course_week: "第2-16周	", course_time: "040507", class_room: "教1-413", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        11 => {course_code: "091M5023H", name: "数据挖掘", course_type: "专业普及课", credit: 2.0, period:40, limit_num: 450, course_week: "第2-14周	", course_time: "010102", class_room: "教1-101", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        12 => {course_code: "091M5024H", name: "编译程序高级教程", course_type: "专业普及课", credit: 2.0, period:40, limit_num: "", course_week: "第2-18周	", course_time: "010507", class_room: "教1-108", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        13 => {course_code: "091M5025H", name: "操作系统高级教程", course_type: "专业普及课", credit: 2.0, period:40, limit_num: "", course_week: "第2-12周	", course_time: "030708", class_room: "教1-101", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        14 => {course_code: "091M5026H", name: "并发数据结构与多核编程", course_type: "专业普及课", credit: 2.0, period:40, limit_num: "", course_week: "第2-17周	", course_time: "040507", class_room: "教1-109", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        15 => {course_code: "091M5027H", name: "形式语言与自动机理论", course_type: "专业普及课", credit: 2.0, period:40, limit_num: "", course_week: "第2-17周	", course_time: "050507", class_room: "教1-113", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        16 => {course_code: "091M5041H", name: "人机交互", course_type: "专业普及课", credit: 2.0, period:40,limit_num: "", course_week: "第2-17周", course_time: "030507", class_room: "教1-108", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        17 => {course_code: "091M5042H", name: "网络数据挖掘", course_type: "专业普及课", credit: 2.0, period:40, limit_num: "", course_week: "第2-17周	", course_time: "020507", class_room: "教1-107", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        18 => {course_code: "091M6043H", name: "认知计算", course_type: "专业研讨课", credit: 2.0, period:40, limit_num: 40, course_week: "第2-12周", course_time: "040506", class_room: "教1-123", teaching_type: "授课、讨论	", exam_type: "读书报告"},
+        19 => {course_code: "091M6045H", name: "可视化与可视计算", course_type: "专业研讨课", credit: 2.0, period:40, limit_num: 40, course_week: "第2-8,10-12周	", course_time: "050506", class_room: "教1-123", teaching_type: "授课、讨论	", exam_type: "读书报告"},
+        20 => {course_code: "092M4001H", name: "最优控制理论", course_type: "专业核心课", credit: 2.0, period:40, limit_num: "", course_week: "第3-6,8-20周	", course_time: "020304", class_room: "教1-109", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        21 => {course_code: "092M4002H", name: "模式识别", course_type: "专业核心课", credit: 3.0, period:60, limit_num: "", course_week: "第2-20周	", course_time: "030911", class_room: "教1-102", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        22 => {course_code: "092M4022H", name: "人工智能理论与实践", course_type: "专业核心课", credit: 3.0, period:60, limit_num: "", course_week: "第2-20周	", course_time: "040911", class_room: "教1-109", teaching_type: "授课、讨论	", exam_type: "闭卷笔试"},
+        23 => {course_code: "092M4023H", name: "图像处理与分析", course_type: "专业核心课", credit: 3.0, period:60, limit_num: "", course_week: "第2-4,6-18周	", course_time: "020102", class_room: "教1-102", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        24 => {course_code: "092M5002H", name: "机器人学导论", course_type: "专业普及课", credit: 3.0, period:60,limit_num: "", course_week: "第2-16周	", course_time: "050507", class_room: "教1-109", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        25 => {course_code: "092M5006H", name: "矩阵分析与应用", course_type: "专业普及课", credit: 2.0, period:40, limit_num: "", course_week: "第2-12周	", course_time: "030102", class_room: "教1-102", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        26 => {course_code: "092M5025H", name: "现代信息检索", course_type: "专业普及课", credit: 2.0, period:40,limit_num: "", course_week: "第2-12周	", course_time: "030304", class_room: "教1-109", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+        27 => {course_code: "092M5026H", name: "随机过程", course_type: "专业普及课", credit: 2.0, period:40,limit_num: "", course_week: "第2-17周	", course_time: "030507", class_room: "教1-109", teaching_type: "课堂讲授为主", exam_type: "读书报告"},
+        28 => {course_code: "092M6001H", name: "机器视觉及其应用", course_type: "专业研讨课", credit: "20/1.0", limit_num: 40, course_week: "第10-19周	", course_time: "030506", class_room: "教1-125", teaching_type: "授课、讨论	", exam_type: "读书报告"},
+        29 => {course_code: "092M6002H", name: "嵌入式系统", course_type: "专业研讨课", credit: "20/1.0", limit_num: 40, course_week: "第2-12周	", course_time: "040910", class_room: "教1-115", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        30 => {course_code: "093M1002H-1", name: "计算机算法设计与分析", course_type: "一级学科核心课", credit: 3.0, period:60, limit_num: 220, course_week: "第2-17周	", course_time: "020102", class_room: "教1-101", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        31 => {course_code: "093M1002H-2", name: "计算机算法设计与分析", course_type: "一级学科核心课",credit: 3.0, period:60, limit_num: 150, course_week: "第2-17周	", course_time: "030102", class_room: "教1-108", teaching_type: "讲课、上机", exam_type: "闭卷笔试"},
+        32 => {course_code: "093M1002H-3", name: "计算机算法设计与分析", course_type: "一级学科核心课", credit: 3.0, period:60, limit_num: 220, course_week: "第5-20周	", course_time: "020304", class_room: "教1-101", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        33 => {course_code: "093M2007H", name: "数据库新技术", course_type: "一级学科普及课", credit: 2.0, period:40,limit_num: "", course_week: "第2-12周	", course_time: "010304", class_room: "教1-107", teaching_type: "课堂讲授为主", exam_type: "闭卷笔试"},
+        34 => {course_code: "09MGX005H", name: "Python语言导论", course_type: "公共选修课", credit: 1.0, period:40,limit_num: 154, course_week: "第4-14周	", course_time: "020708", class_room: "教1-108", teaching_type: "课堂讲授为主", exam_type: "课堂开卷"},
+    }
+    
 
 teacher_map.keys.each do |index|
   teacher=User.create!(

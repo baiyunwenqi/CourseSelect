@@ -17,27 +17,24 @@ ActiveRecord::Schema.define(version: 20161223033738) do
   enable_extension "plpgsql"
 
   create_table "courses", force: :cascade do |t|
-    
     t.string   "name"
     t.string   "course_code"
-    t.string   "course_type"
     t.string   "teaching_type"
     t.string   "exam_type"
-    #t.string   "credit"
-    t.integer :"period"           #学时
-    t.float :"credit"              #学分
+    t.string   "course_type"
+    t.integer  "period"
+    t.float    "credit"
     t.integer  "limit_num"
-    t.integer  "student_num",   default: 0
+    t.integer  "student_num",        default: 0
     t.string   "class_room"
     t.string   "course_time"
-    #t.string   "course_week"
-    t.integer :"start_week"       #开始周
-    t.integer :"end_week"         #结束周
+    t.string   "course_week"
+    t.text     "description",        default: ""
     t.integer  "teacher_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.boolean  "open",          default: false
-    t.text    :"description", default: ""      #课程简介
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "open",               default: false
+    t.string   "course_description", default: ""
   end
 
   create_table "grades", force: :cascade do |t|

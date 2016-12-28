@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :courses, through: :grades
 
   has_many :teaching_courses, class_name: "Course", foreign_key: :teacher_id
+  #新增
   has_one :favorite
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: {maximum: 255},
