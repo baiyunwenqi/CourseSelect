@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :list
+      get :list_all
       get :show_owned
     end
   end

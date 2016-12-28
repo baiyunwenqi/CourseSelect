@@ -48,9 +48,9 @@
                   <td><%= count %></td>
                   <% printflag=false %>
                   <% @course.each do |course|
-                  strcoursetime=course.course_time
+                  strcoursetime=course.course_time   
                     if strcoursetime[1]=='1'
-                      nowweek=1
+                      nowweek=1                  #选课在第几周？
                     elsif  strcoursetime[1]=='2'
                       nowweek=2
                     elsif  strcoursetime[1]=='3'
@@ -64,8 +64,8 @@
                     elsif  strcoursetime[1]=='7'
                       nowweek=7
                     end
-                   classstart=strcoursetime[2..3].to_i
-                    classend=strcoursetime[4..5].to_i
+                   classstart=strcoursetime[2..3].to_i   #课程从第几节开始
+                    classend=strcoursetime[4..5].to_i   #从第几节结束
                   if weekcount==nowweek and count>=classstart and count<=classend
                     currentcount=1
                     currentcourse=course
@@ -78,7 +78,8 @@
                          currentcount=0
                       %>
                       <td align="left"><%=
-                        currentcourse.name+weekcount.to_s
+                       # currentcourse.name+weekcount.to_s
+                       currentcourse.name
                       %></td>
                   <%
                     else
@@ -124,7 +125,8 @@
                          currentcount=0
                       %>
                       <td align="left"><%=
-                        currentcourse.name+weekcount.to_s
+                        #currentcourse.name+weekcount.to_s
+                        currentcourse.name
                       %></td>
                   <%
                     else
@@ -171,7 +173,8 @@
                             currentcount=0
                           %>
                           <td align="left"><%=
-                            currentcourse.name+weekcount.to_s
+                            #currentcourse.name+weekcount.to_s
+                            currentcourse.name
                           %></td>
                       <%
                          else
@@ -217,7 +220,8 @@
                          currentcount=0
                       %>
                       <td align="left"><%=
-                        currentcourse.name+weekcount.to_s
+                        #currentcourse.name+weekcount.to_s
+                        currentcourse.name
                       %></td>
                   <%
                     else
@@ -265,7 +269,7 @@
                          currentcount=0
                       %>
                       <td align="left"><%=
-                        currentcourse.name+weekcount.to_s
+                        currentcourse.name
                       %></td>
                   <%
                     else
@@ -313,7 +317,7 @@
                          currentcount=0
                       %>
                       <td align="left"><%=
-                        currentcourse.name+weekcount.to_s
+                        currentcourse.name
                       %></td>
                   <%
                     else
@@ -359,7 +363,7 @@
                          currentcount=0
                       %>
                       <td align="left"><%=
-                        currentcourse.name+weekcount.to_s
+                        currentcourse.name
                       %></td>
                   <%
                     else

@@ -43,12 +43,14 @@
             </tr>
 
             <tbody>
+              
             <% @course.each do |course| %>
                 <tr>
 
                   <td><%= course.course_code %></td>
                   <td><%= course.name %></td>
-                  <td><%= course.credit %></td>
+                  <!-- 显示学时/学分 -->
+                <td><%= course.period.to_s + "/" + course.credit.to_s %></td>
                   <td><%= course.exam_type %></td>
                   <td><%= course.teacher.name %></td>
 

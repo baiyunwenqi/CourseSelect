@@ -68,7 +68,11 @@ end
     @course=@course.sort_by{|e| e[:course_time]}
 
   end
-
+  #定义全部课程显示
+  def list_all
+    @course=Course.all
+  end
+    
   def select
     @course=Course.find_by_id(params[:id])
     current_user.courses<<@course

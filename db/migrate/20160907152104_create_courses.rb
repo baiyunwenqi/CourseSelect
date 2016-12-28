@@ -7,7 +7,7 @@ class CreateCourses < ActiveRecord::Migration
       t.string :teaching_type
       t.string :exam_type
       t.string :course_type
-      t.integer :period           #学时
+      t.integer :period,   default: 0        #学时
       t.float :credit              #学分
       t.integer :limit_num
       t.integer :student_num, default: 0

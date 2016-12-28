@@ -1,5 +1,40 @@
 <div class="panel-group" id="accordion">
 
+<!--  学期课表（学生）-->
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+
+   <div id="CourseCollapse" class="panel-collapse collapse <%= "in" if ["courses"].include?(params[:controller]) %>">
+      <ul class="list-group">
+        <% if student_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#CourseCollapse"><span class="glyphicon glyphicon-user"></span>
+              全部课程</a>
+        <% end %>
+
+      </h4>
+    </div>
+        <% if student_logged_in? %>
+            
+            <li class="list-group-item">
+              <%= link_to list_all_courses_path do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> 全部课程
+                  <span class="label label-info pull-right"><%= (Course.all).length %></span>
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to courses_path do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> 收藏夹
+                  <span class="label label-info pull-right"><%= current_user.courses.length %></span>
+              <% end %>
+            </li>
+            
+        <% end %>
+
+      </ul>
+    </div>
+  </div>
+<!--  课程管理（老师）----选修课程（学生）-->
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -17,9 +52,8 @@
       </h4>
     </div>
 
-    <div id="CourseCollapse" class="panel-collapse collapse <%= "in" if ["courses"].include?(params[:controller]) %>">
+   <div id="CourseCollapse" class="panel-collapse collapse <%= "in" if ["courses"].include?(params[:controller]) %>">
       <ul class="list-group">
-
         <% if teacher_logged_in? %>
             <li class="list-group-item">
               <%= link_to courses_path do %>
@@ -35,6 +69,7 @@
         <% end %>
 
         <% if student_logged_in? %>
+            
             <li class="list-group-item">
               <%= link_to list_courses_path do %>
                   <span class="glyphicon glyphicon-chevron-right"></span> 选修课程
@@ -47,11 +82,13 @@
                   <span class="label label-info pull-right"><%= current_user.courses.length %></span>
               <% end %>
             </li>
+            
         <% end %>
 
       </ul>
     </div>
   </div>
+<!--           --------------------------------------------------------------------------->
 
   <div class="panel panel-default">
     <div class="panel-heading">

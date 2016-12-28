@@ -22,19 +22,18 @@ ActiveRecord::Schema.define(version: 20161223033738) do
     t.string   "teaching_type"
     t.string   "exam_type"
     t.string   "course_type"
-    t.integer  "period"
+    t.integer  "period",        default: 0
     t.float    "credit"
     t.integer  "limit_num"
-    t.integer  "student_num",        default: 0
+    t.integer  "student_num",   default: 0
     t.string   "class_room"
     t.string   "course_time"
     t.string   "course_week"
-    t.text     "description",        default: ""
+    t.text     "description",   default: ""
     t.integer  "teacher_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.boolean  "open",               default: false
-    t.string   "course_description", default: ""
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "open",          default: false
   end
 
   create_table "grades", force: :cascade do |t|
