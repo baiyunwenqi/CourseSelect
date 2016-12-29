@@ -11,6 +11,24 @@
         <div class="panel-heading">
           <% if teacher_logged_in? %><h3 class="panel-title">授课列表</h3><% end %>
           <% if student_logged_in? %><h3 class="panel-title">已选课程</h3><% end %>
+          
+          <!-- 增加课程表功能-->
+           <% if student_logged_in? %>
+              <%= link_to "课程表" ,show_owned_courses_path(@course),class: 'btn-sm btn-danger' %>
+          <% end%>
+          
+          <!-- 统计总学分 -->
+          <% if student_logged_in? %>
+          <% 
+           s_credit=0.0
+           for index in (0..@course.length-1)
+           #12月28日修改 因数据结构变化
+             # c=@course[index].credit.split("/")
+             c=@course[index].credit
+             s_credit=s_credit+c
+           end
+           %>
+          <h3 class="panel-title">已选总学分：<%= s_credit %></h3><% end %>
         </div>
 
         <div class="panel-body">
@@ -25,12 +43,14 @@
             </tr>
 
             <tbody>
+              
             <% @course.each do |course| %>
                 <tr>
 
                   <td><%= course.course_code %></td>
                   <td><%= course.name %></td>
-                  <td><%= course.credit %></td>
+                  <!-- 显示学时/学分 -->
+                <td><%= course.period.to_s + "/" + course.credit.to_s %></td>
                   <td><%= course.exam_type %></td>
                   <td><%= course.teacher.name %></td>
 
