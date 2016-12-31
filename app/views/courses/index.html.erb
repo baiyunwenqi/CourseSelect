@@ -53,6 +53,16 @@
                 <td><%= course.period.to_s + "/" + course.credit.to_s %></td>
                   <td><%= course.exam_type %></td>
                   <td><%= course.teacher.name %></td>
+                  
+                  
+                   <!-- 12.31日更新 -->
+                   <td>
+                    <% if teacher_logged_in? %>
+                        <%= link_to "选课名单", student_list_course_url(course) %>
+                    <% end %>
+                  </td>
+
+
 
                   <% if teacher_logged_in? %>
                       <td><%= link_to "编辑", edit_course_url(course), class: 'btn btn-xs btn-info' %></td>
