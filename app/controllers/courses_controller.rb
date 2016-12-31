@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
 
   before_action :student_logged_in, only: [:select, :quit, :list]
-  before_action :teacher_logged_in, only: [:new, :create, :edit, :destroy, :update]
+  before_action :teacher_logged_in, only: [:new, :create, :edit, :destroy, :update, :student_list]
   before_action :logged_in, only: :index
 #/-------------------------------------------------liwenqi add these comments-
   def show_owned
@@ -59,6 +59,13 @@ def close
   @course.update_attributes(open:false)
   redirect_to courses_path, flash: {:success => "已经成功关闭该课程:#{ @course.name}"}
 end
+
+#------12.31日更新
+  def student_list
+    @course = Course.find_by_id(params[:id])
+    @user = @course.users
+  end
+  
   #-------------------------for students----------------------
 
   def list

@@ -23,6 +23,11 @@ Rails.application.routes.draw do
       get :quit
       get :open
       get :close
+      
+      
+      #12.31日更新
+      get :student_list 
+
     end
     collection do
       get :list
