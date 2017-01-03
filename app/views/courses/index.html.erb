@@ -13,10 +13,11 @@
           <% if student_logged_in? %><h3 class="panel-title">已选课程</h3><% end %>
           
           <!-- 增加课程表功能-->
+          <div class="panel panel-primary">
            <% if student_logged_in? %>
-              <%= link_to "课程表" ,show_owned_courses_path(@course),class: 'btn-sm btn-danger' %>
+              <%= link_to "课程表" ,show_owned_courses_path(@course),class: 'btn-sm btn-danger' , style: 'float:right;margin-top:10px;margin-right:60px'%>
           <% end%>
-          
+          </div>
           <!-- 统计总学分 -->
           <% if student_logged_in? %>
           <% 
