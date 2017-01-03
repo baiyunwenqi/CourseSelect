@@ -69,12 +69,28 @@ end
   #-------------------------for students----------------------
 
   def list
-    @course=Course.all
-    @course=@course.where(:open=>"true")-current_user.courses
-     #对课程进行排序
-    @course=@course.sort_by{|e| e[:course_time]}
-
+    @q1=params[:name]
+  # @q2=params[:course_type]
+    if @q1.nil? == false 
+      @course = Course.where("name like '#{@q1}' ")
+     else
+      @course=Course.all
+    end
+    #if @q2.nil? == false  
+     # @course = Course.where("course_type like '#{@q2}' ")
+    # else
+    #  @course=Course.all
+    #end
+    @course=@course - current_user.courses
+    @course_true=Array.new
+    @course.each do |every_course|
+      if every_course.open_was then
+         @course_true.push every_course
+      end
+    end 
+    @course=@course_true
   end
+  
   #定义全部课程显示
   def list_all
     @course=Course.all
