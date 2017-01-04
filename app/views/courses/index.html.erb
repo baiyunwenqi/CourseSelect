@@ -59,7 +59,7 @@
                    <!-- 12.31日更新 -->
                    <td>
                     <% if teacher_logged_in? %>
-                        <%= link_to "选课名单", student_list_course_url(course) %>
+                        <%= link_to "选课名单", student_list_course_url(course), class: 'btn btn-xs btn-info' %>
                     <% end %>
                   </td>
 
