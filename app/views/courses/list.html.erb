@@ -55,6 +55,10 @@
                   <!-- 显示学时/学分 -->
                  <td><%= course.period.to_s + "/" + course.credit.to_s %></td>
                   <td><%= course.limit_num %></td>
+                   <!-- 显示已选人数 -->
+                  <%
+                      course.student_num=course.grades.length
+                  %>
                   <td><%= course.student_num %></td>
                   <td><%= course.course_type %></td>
                   <td><%= course.teaching_type %></td>

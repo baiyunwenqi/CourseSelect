@@ -67,7 +67,9 @@ end
   end
   
   #-------------------------for students----------------------
-
+def  list_all
+  @course=Course.all
+end
   def list
     @q1=params[:name]
   # @q2=params[:course_type]
@@ -90,17 +92,14 @@ end
     end 
     @course=@course_true
   end
-  
-  #定义全部课程显示
-  def list_all
-    @course=Course.all
-  end
-    
+
   def select
     @course=Course.find_by_id(params[:id])
     current_user.courses<<@course
     flash={:success => "成功选择课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
+    @course.student_num +=1
+    @course.save
   end
 
   def quit
@@ -108,8 +107,9 @@ end
     current_user.courses.delete(@course)
     flash={:success => "成功退选课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
+    @course.student_num -=1
+    @course.save
   end
-
 
   #-------------------------for both teachers and students----------------------
 
