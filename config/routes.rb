@@ -23,8 +23,7 @@ Rails.application.routes.draw do
       get :quit
       get :open
       get :close
-      
-      
+      get :add_favorite
       #12.31日更新
       get :student_list 
 
@@ -33,6 +32,8 @@ Rails.application.routes.draw do
       get :list
       get :list_all
       get :show_owned
+      get :list_favorite
+      
     end
   end
 

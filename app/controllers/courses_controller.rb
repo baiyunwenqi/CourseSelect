@@ -5,7 +5,13 @@ class CoursesController < ApplicationController
   before_action :logged_in, only: :index
 #/-------------------------------------------------liwenqi add these comments-
   def show_owned
-    @course=current_user.courses
+     @grades=current_user.grades
+     @grades.each do |grade|
+      if grade.favorite==false then
+         @course_f.push grade.course
+      end
+    end
+    @course=@course_f
     #对课程进行排序
     @course=@course.sort_by{|e| e[:course_time]}
   end
@@ -70,7 +76,8 @@ end
 def  list_all
   @course=Course.all
 end
-  def list
+
+def list
     @q1=params[:name]
   # @q2=params[:course_type]
     if @q1.nil? == false 
@@ -91,11 +98,10 @@ end
       end
     end 
     @course=@course_true
-  end
+end
 
   def select
     @course=Course.find_by_id(params[:id])
-    current_user.courses<<@course
     @course.student_num=@course.grades.length
     if @course.limit_num.nil?|| @course.student_num<@course.limit_num
         current_user.courses<<@course
@@ -103,26 +109,59 @@ end
         @course.save
        flash={:success => "成功选择课程: #{@course.name}"}
        redirect_to courses_path, flash: flash
-      else
+    else
         flash={danger: "当前课程已满，请选择其他课程: #{@course.name}"}
         redirect_to courses_path, flash: flash         
-      end
-  end
+    end
+end
+  
+  
+def add_favorite
+  @course=Course.find_by_id(params[:id])
+  #current_user.courses<<@course
+  #l=current_user.grades.length
+  current_user.courses.push @course
+  @grade=current_user.grades.last
+  @grade.update_attributes(favorite:true)
+  flash={:success => "成功收藏课程: #{@course.name}"}
+  redirect_to courses_path, flash: flash
+end
 
-  def quit
+def list_favorite
+   @grades=current_user.grades
+    @course_f=Array.new
+     @grades.each do |grade|
+      if grade.favorite==true then
+         @course_f.push grade.course
+      end
+    end
+    @course=@course_f
+end
+
+def quit
     @course=Course.find_by_id(params[:id])
     current_user.courses.delete(@course)
-    flash={:success => "成功退选课程: #{@course.name}"}
-    redirect_to courses_path, flash: flash
     @course.student_num -=1
     @course.save
-  end
+    flash={:success => "成功退选课程: #{@course.name}"}
+    redirect_to courses_path, flash: flash
+    
+end
 
   #-------------------------for both teachers and students----------------------
 
   def index
     @course=current_user.teaching_courses if teacher_logged_in?
-    @course=current_user.courses if student_logged_in?
+   if student_logged_in?
+    @grades=current_user.grades
+    @course_f=Array.new
+    @grades.each do |grade|
+      if grade.favorite==false then
+         @course_f.push grade.course
+      end
+    end
+    @course=@course_f
+  end
   end
 
 
@@ -149,10 +188,10 @@ end
     end
   end
 
-  def course_params
+def course_params
     params.require(:course).permit(:course_code, :name, :course_type, :teaching_type, :exam_type,
                                    :credit, :limit_num, :class_room, :course_time, :course_week)
-  end
+end
 
 
 end
