@@ -4,8 +4,11 @@
       <div class="panel-heading">
         <h4><span class="glyphicon glyphicon-lock"></span> 登录</h4>
       </div>
-      <div class="panel-body">
-
+      
+      
+      <div class="row">
+      <div class="content-main">
+      <div class="panel-heading">
         <%= form_for(:session, url: sessions_login_path, method: :post, html: {role: 'form'}) do |f| %>
             <div class="form-group">
               <%= f.label :email, "账号密码登陆" %>
@@ -32,6 +35,9 @@
 
         <% end %>
       </div>
+      </div>
+      </div>
+      
 
       <div class="panel-footer">
         <p>没有账号?
