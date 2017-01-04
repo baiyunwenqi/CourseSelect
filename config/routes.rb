@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     member do
       get :select
       get :quit
+      get :quit_f
       get :open
       get :close
       get :add_favorite

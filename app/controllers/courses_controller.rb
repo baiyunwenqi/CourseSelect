@@ -6,6 +6,7 @@ class CoursesController < ApplicationController
 #/-------------------------------------------------liwenqi add these comments-
   def show_owned
      @grades=current_user.grades
+     @course_f=Array.new
      @grades.each do |grade|
       if grade.favorite==false then
          @course_f.push grade.course
@@ -124,7 +125,7 @@ def add_favorite
   @grade=current_user.grades.last
   @grade.update_attributes(favorite:true)
   flash={:success => "成功收藏课程: #{@course.name}"}
-  redirect_to courses_path, flash: flash
+  redirect_to list_favorite_courses_path, flash: flash
 end
 
 def list_favorite
@@ -136,6 +137,14 @@ def list_favorite
       end
     end
     @course=@course_f
+end
+
+def quit_f
+    @course=Course.find_by_id(params[:id])
+    current_user.courses.delete(@course)
+    @course.save
+    flash={:success => "成功从收藏夹去掉课程: #{@course.name}"}
+    redirect_to list_favorite_courses_path, flash: flash
 end
 
 def quit

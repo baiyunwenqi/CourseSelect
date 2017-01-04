@@ -53,8 +53,9 @@
                 <td><%= course.period.to_s + "/" + course.credit.to_s %></td>
                   <td><%= course.exam_type %></td>
                   <td><%= course.teacher.name %></td>
-                  
-                  
+                  <% if student_logged_in? %>
+                      <td><%= link_to "删除", quit_f_course_path(course), class: 'btn-sm btn-danger' %></td>
+                  <% end %>
                    <!-- 12.31日更新 -->
                 </tr>
             <% end %>
