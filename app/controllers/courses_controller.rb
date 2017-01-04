@@ -77,7 +77,9 @@ end
   end
   #定义全部课程显示
   def list_all
-    @course=Course.all
+    #-------QiaoCode--------
+    @course=Course.where(:open=>false)
+    @course=@course-current_user.courses
   end
     
   def select
