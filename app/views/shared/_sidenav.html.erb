@@ -23,9 +23,9 @@
               <% end %>
             </li>
             <li class="list-group-item">
-              <%= link_to courses_path do %>
+              <%= link_to list_favorite_courses_path do %>
                   <span class="glyphicon glyphicon-chevron-right"></span> 收藏夹
-                  <span class="label label-info pull-right"><%= current_user.courses.length %></span>
+                  <span class="label label-info pull-right"><%=current_user.grades.where(:favorite=>"true").length %></span>
               <% end %>
             </li>
             
@@ -79,7 +79,7 @@
             <li class="list-group-item">
               <%= link_to courses_path do %>
                   <span class="glyphicon glyphicon-chevron-right"></span> 已选课程
-                  <span class="label label-info pull-right"><%= current_user.courses.length %></span>
+                  <span class="label label-info pull-right"><%=current_user.grades.where(favorite: false).length %></span>
               <% end %>
             </li>
             

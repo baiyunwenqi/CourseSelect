@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <div class="col">
+
+    <div class="col-sm-2">
+      <%= render "shared/sidenav" %>
+    </div>
+
+    <div class="col-sm-10">
+
+      <div class="panel panel-primary filterable">
+        <div class="panel-heading">
+          <% if student_logged_in? %><h3 class="panel-title">已收藏课程</h3><% end %>
+          
+          <!-- 增加课程表功能-->
+          <div class="panel panel-primary">
+           <% if student_logged_in? %>
+              <%= link_to "课程冲突分析" ,conflict_f_courses_path(@course),class: 'btn-sm btn-danger' , style: 'float:right;margin-top:10px;margin-right:60px'%>
+          <% end%>
+          </div>
+          <!-- 统计总学分 -->
+          <% if student_logged_in? %>
+          <% 
+           s_credit=0.0
+           for index in (0..@course.length-1)
+           #12月28日修改 因数据结构变化
+             # c=@course[index].credit.split("/")
+             c=@course[index].credit
+             s_credit=s_credit+c
+           end
+           %>
+          <h3 class="panel-title">已选总学分：<%= s_credit %></h3><% end %>
+        </div>
+
+        <div class="panel-body">
+          <table class="table table-responsive table-condensed table-hover">
+            <thead>
+            <tr>
+              <th>课程编号</th>
+              <th>课程名称</th>
+              <th>课时/学分</th>
+              <th>考试方式</th>
+              <th>主讲教师</th>
+            </tr>
+
+            <tbody>
+              
+            <% @course.each do |course| %>
+                <tr>
+
+                  <td><%= course.course_code %></td>
+                  <td><%= course.name %></td>
+                  <!-- 显示学时/学分 -->
+                <td><%= course.period.to_s + "/" + course.credit.to_s %></td>
+                  <td><%= course.exam_type %></td>
+                  <td><%= course.teacher.name %></td>
+                  <% if student_logged_in? %>
+                      <td><%= link_to "删除", quit_f_course_path(course), class: 'btn-sm btn-danger' %></td>
+                  <% end %>
+                   <!-- 12.31日更新 -->
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

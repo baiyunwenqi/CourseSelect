@@ -21,10 +21,10 @@ Rails.application.routes.draw do
     member do
       get :select
       get :quit
+      get :quit_f
       get :open
       get :close
-      
-      
+      get :add_favorite
       #12.31日更新
       get :student_list 
 
@@ -33,6 +33,9 @@ Rails.application.routes.draw do
       get :list
       get :list_all
       get :show_owned
+      get :list_favorite
+      get :from_f
+      get :conflict_f
     end
   end
 

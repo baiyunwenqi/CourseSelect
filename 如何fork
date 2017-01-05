@@ -1,0 +1,29 @@
+##小组说明
+ -获取源码分支
+ +
+ +1）获取源码分支
+  首先登录github网站fork https://github.com/liuqiaoping7/CourseSelect.git
+  git clone https://github.com/自己的用户名/CourseSelect.git
+  
+ -推送自己的代码，三个命令就行了
+ +2）本地编辑，push代码到自己的fork分支
+  git add --all
+  git commit -m "application for.."
+  git push origin master
+ -push request
+ -到github网页上发起push request即可。
+  
+ -回退操作
+ +2）fork分支同步
+ +1.组员push request之前，需要先从组代码pull最新的代码并合并测试通过
+ +    常用几条命令： 
+ +    git remote add upstream https://github.com/liuqiaoping7/CourseSelect.git
+ +    git remote -v    #察看是否增加
+ +    git pull upstream master   #从组代码获取最新代码并合并到当前分支
+ +2.发起push request，可在github网站上操作
+ +3.组长merge组员的贡献到origin/master
+ +
+ +3）回退操作
+  恢复到最近一次提交git reset --hard HEAD 
+  或者丢弃单个文件修改就是git checkout -- file
+  git clean -dxf则会丢弃所以没有add的修改，保持工作区的清净 
