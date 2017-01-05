@@ -39,6 +39,7 @@
               <th>课程编号</th>
               <th>课程名称</th>
               <th>课时/学分</th>
+              <th>上课时间</th>
               <th>考试方式</th>
               <th>主讲教师</th>
             </tr>
@@ -52,6 +53,30 @@
                   <td><%= course.name %></td>
                   <!-- 显示学时/学分 -->
                 <td><%= course.period.to_s + "/" + course.credit.to_s %></td>
+                 <!-- 显示上课时间 -->
+                  <%  strcoursetime="周"
+                      intweek=course.course_time[1].to_i
+                      if intweek==1
+                        strcoursetime=strcoursetime +"一".to_s
+                      elsif intweek==2
+                        strcoursetime=strcoursetime +"二".to_s
+                      elsif intweek==3
+                        strcoursetime=strcoursetime +"三".to_s
+                      elsif intweek==4
+                        strcoursetime=strcoursetime +"四".to_s
+                      elsif intweek==5
+                        strcoursetime=strcoursetime +"五".to_s
+                      elsif intweek==6
+                        strcoursetime=strcoursetime +"六".to_s
+                      else intweek==7
+                        strcoursetime=strcoursetime +"七".to_s
+                   end
+                    strcoursetime =strcoursetime+"("
+                    strcoursetime=strcoursetime+course.course_time[2..5]
+                    strcoursetime=strcoursetime.insert(5,'-')
+                    strcoursetime=strcoursetime+")"
+                   %>
+                  <td><%= strcoursetime %></td>
                   <td><%= course.exam_type %></td>
                   <td><%= course.teacher.name %></td>
                   
