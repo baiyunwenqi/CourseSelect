@@ -64,7 +64,7 @@
                     elsif  strcoursetime[1]=='7'
                       nowweek=7
                     end
-                   classstart=strcoursetime[2..3].to_i   #课程从第几节开始
+                    classstart=strcoursetime[2..3].to_i   #课程从第几节开始
                     classend=strcoursetime[4..5].to_i   #从第几节结束
                   if weekcount==nowweek and count>=classstart and count<=classend
                     currentcount=1
