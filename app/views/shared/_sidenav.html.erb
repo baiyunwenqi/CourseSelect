@@ -25,16 +25,7 @@
             <li class="list-group-item">
               <%= link_to list_favorite_courses_path do %>
                   <span class="glyphicon glyphicon-chevron-right"></span> 收藏夹
-                     <%
-                  l=current_user.grades.length
-                  count=0
-                  for i in (0..l-1)
-                     if current_user.grades[i].favorite==true
-                       count+=1
-                     end
-                  end
-                  %>
-                  <span class="label label-info pull-right"><%=count %></span>
+                  <span class="label label-info pull-right"><%=current_user.grades.where(:favorite=>"true").length %></span>
               <% end %>
             </li>
             
@@ -88,16 +79,7 @@
             <li class="list-group-item">
               <%= link_to courses_path do %>
                   <span class="glyphicon glyphicon-chevron-right"></span> 已选课程
-                  <%
-                  l=current_user.grades.length
-                  count=0
-                  for i in (0..l-1)
-                     if current_user.grades[i].favorite==false
-                       count+=1
-                     end
-                  end
-                  %>
-                  <span class="label label-info pull-right"><%=count %></span>
+                  <span class="label label-info pull-right"><%=current_user.grades.where(favorite: false).length %></span>
               <% end %>
             </li>
             

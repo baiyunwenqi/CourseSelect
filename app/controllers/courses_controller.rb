@@ -147,6 +147,15 @@ def quit_f
     redirect_to list_favorite_courses_path, flash: flash
 end
 
+def from_f
+  @grades=current_user.grades
+  @grades.each do |grade|
+       grade.update_attributes(favorite:false)
+  end 
+  flash={:success => "成功导入"}
+  redirect_to courses_path, flash: flash
+end
+
 def quit
     @course=Course.find_by_id(params[:id])
     current_user.courses.delete(@course)

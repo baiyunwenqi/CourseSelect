@@ -41,23 +41,11 @@ ActiveRecord::Schema.define(version: 20170104135926) do
     t.boolean  "open",          default: false
   end
 
-  create_table "favorite", force: :cascade do |t|
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "favorite", ["user_id"], name: "index_favorite_on_user_id", using: :btree
-
-  create_table "favorites", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "grades", force: :cascade do |t|
     t.integer  "course_id"
     t.integer  "user_id"
     t.integer  "grade"
+    t.boolean "favorite",default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
