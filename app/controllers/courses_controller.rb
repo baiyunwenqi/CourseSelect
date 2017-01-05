@@ -231,7 +231,7 @@ def conflict_f
                       end
            end
            if count==0
-             flash={:danger => "没有时间的冲突的选课程"}
+             flash={:success => "没有时间冲突的课程"}
            end
     end 
 redirect_to list_favorite_courses_path,flash: flash
