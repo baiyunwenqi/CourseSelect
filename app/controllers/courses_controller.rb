@@ -216,23 +216,24 @@ def conflict_f
                      week1=grade.course.course_time[1]
                      name1=grade.course.name
                      code1=grade.course.course_code
-                     @grades.each do|grade1|
-                          time2 = (grade1.course.course_time[3].to_i..grade1.course.course_time[4..5].to_i).to_a
-                          week2=grade1.course.course_time[1]
-                          name2=grade1.course.name
-                          code2=grade.course.course_code
+                     #@grades.each do|grade1|
+                     for i in (0..@grades.length-1)
+                          time2 = (@grades[i].course.course_time[3].to_i..@grades[i].course.course_time[4..5].to_i).to_a
+                          week2=@grades[i].course.course_time[1]
+                          name2=@grades[i].course.name
+                          code2=@grades[i].course.course_code
                           if code1==code2
-                            next
-                          elsif (time1 & time2)!=[] && week1==week2
-                            count+=1
-                            flash={:danger => "课程：#{name1}与课程：#{name2}——时间有冲突"}
-                            break
+                             count=count
+                            elsif (time1 & time2)!=[] && week1==week2
+                              flash={:danger => "(#{name1})与(#{name2})时间有冲突"}
+                              count+=1
+                              break
                           end
                       end
            end
            if count==0
-             flash={:success => "没有时间冲突的课程"}
-           end
+              flash={:success => "没有时间冲突的课程"}
+            end
     end 
 redirect_to list_favorite_courses_path,flash: flash
 end
