@@ -38,7 +38,8 @@
                   <!-- 显示学时/学分 -->
                  <td><%= course.period.to_s + "/" + course.credit.to_s %></td>
                   <td><%= course.limit_num %></td>
-                  <td><%= course.student_num %></td>
+                    <!-- 显示已选人数 -->
+                  <td>0</td>
                   <td><%= course.course_type %></td>
                   <td><%= course.teaching_type %></td>
                   <td><%= course.exam_type %></td>
@@ -67,7 +68,7 @@
                     strcoursetime=strcoursetime+")"
                    %>
                   <td><%= strcoursetime %></td>
-                  <td><%= link_to "加入收藏夹", select_course_path(course), class: 'btn-sm btn-info' %></td>
+                  <td><%= link_to "加入收藏夹", add_favorite_course_path(course), class: 'btn-sm btn-info' %></td>
 
                 </tr>
             <% end %>
