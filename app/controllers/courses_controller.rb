@@ -5,7 +5,14 @@ class CoursesController < ApplicationController
   before_action :logged_in, only: :index
 #/-------------------------------------------------liwenqi add these comments-
   def show_owned
-    @course=current_user.courses
+     @grades=current_user.grades
+     @course_f=Array.new
+     @grades.each do |grade|
+      if grade.favorite==false then
+         @course_f.push grade.course
+      end
+    end
+    @course=@course_f
     #对课程进行排序
     @course=@course.sort_by{|e| e[:course_time]}
   end
@@ -67,41 +74,120 @@ end
   end
   
   #-------------------------for students----------------------
+def  list_all
+  @course=Course.all
+end
 
-  def list
-    @course=Course.all
-    @course=@course.where(:open=>"true")-current_user.courses
-     #对课程进行排序
-    @course=@course.sort_by{|e| e[:course_time]}
+def list
+    @q1=params[:name]
+  # @q2=params[:course_type]
+    if @q1.nil? == false 
+      @course = Course.where("name like '#{@q1}' ")
+     else
+      @course=Course.all
+    end
+    #if @q2.nil? == false  
+     # @course = Course.where("course_type like '#{@q2}' ")
+    # else
+    #  @course=Course.all
+    #end
+    @course=@course - current_user.courses
+    @course_true=Array.new
+    @course.each do |every_course|
+      if every_course.open_was then
+         @course_true.push every_course
+      end
+    end 
+    @course=@course_true
+end
 
-  end
-  #定义全部课程显示
-  def list_all
-    #-------QiaoCode--------
-    @course=Course.where(:open=>false)
-    @course=@course-current_user.courses
-  end
-    
   def select
     @course=Course.find_by_id(params[:id])
-    current_user.courses<<@course
-    flash={:success => "成功选择课程: #{@course.name}"}
-    redirect_to courses_path, flash: flash
-  end
+    @course.student_num=@course.grades.length
+    if @course.limit_num.nil?|| @course.student_num<@course.limit_num
+        current_user.courses<<@course
+        @course.student_num+=1
+        @course.save
+       flash={:success => "成功选择课程: #{@course.name}"}
+       redirect_to courses_path, flash: flash
+    else
+        flash={danger: "当前课程已满，请选择其他课程: #{@course.name}"}
+        redirect_to courses_path, flash: flash         
+    end
+end
 
-  def quit
+def quit
     @course=Course.find_by_id(params[:id])
     current_user.courses.delete(@course)
+    @course.student_num -=1
+    @course.save
     flash={:success => "成功退选课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
+end
+  #-------------------------收藏夹相关----------------------
+  
+def add_favorite
+  @course=Course.find_by_id(params[:id])
+  #current_user.courses<<@course
+  #l=current_user.grades.length
+  current_user.courses.push @course
+  @grade=current_user.grades.last
+  @grade.update_attributes(favorite:true)
+  flash={:success => "成功收藏课程: #{@course.name}"}
+  redirect_to list_favorite_courses_path, flash: flash
+end
+
+def list_favorite
+   @grades=current_user.grades
+    @course_f=Array.new
+     @grades.each do |grade|
+      if grade.favorite==true then
+         @course_f.push grade.course
+      end
+    end
+    @course=@course_f
+end
+
+def quit_f
+    @course=Course.find_by_id(params[:id])
+    current_user.courses.delete(@course)
+    @course.save
+    flash={:success => "成功从收藏夹去掉课程: #{@course.name}"}
+    redirect_to list_favorite_courses_path, flash: flash
+end
+
+def from_f
+  @grades=current_user.grades
+  @grades.each do |grade|
+       grade.update_attributes(favorite:false)
+  end 
+  flash={:success => "成功导入"}
+  redirect_to courses_path, flash: flash
+end
+
+def conflict_f
+  @grades=current_user.grades.where(:favorite=>"true")
+  if @grades.length==0
+  flash={:success => "未收藏任何课程"}
   end
+  redirect_to list_favorite_courses_path,flash: flash
+end
 
 
   #-------------------------for both teachers and students----------------------
 
   def index
     @course=current_user.teaching_courses if teacher_logged_in?
-    @course=current_user.courses if student_logged_in?
+   if student_logged_in?
+    @grades=current_user.grades
+    @course_f=Array.new
+    @grades.each do |grade|
+      if grade.favorite==false then
+         @course_f.push grade.course
+      end
+    end
+    @course=@course_f
+  end
   end
 
 
@@ -128,10 +214,10 @@ end
     end
   end
 
-  def course_params
+def course_params
     params.require(:course).permit(:course_code, :name, :course_type, :teaching_type, :exam_type,
                                    :credit, :limit_num, :class_room, :course_time, :course_week)
-  end
+end
 
 
 end
