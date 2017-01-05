@@ -75,7 +75,7 @@ end
   
   #-------------------------for students----------------------
   def list_all
-    @course=Course.where(:open=>false)
+    @course=Course.all
     @course=@course-current_user.courses
 end
 
