@@ -60,4 +60,20 @@ def login():
 
     print(name, " : ", response.getcode())
 
+if __name__ == '__main__':
+    threads = []
+    number = 5
+    try:
+        for i in range(number):
+            t = Performance_test()
+            # t = threading.Thread(target=Performance_test.login(pt))
+            threads.append(t)
 
+        for t in threads:
+            t.start()
+
+        for t in threads:
+            t.join()
+        print("all threads finish!!")
+    except Exception as e:
+        print("some thread failed!!")git 
