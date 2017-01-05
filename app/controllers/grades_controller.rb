@@ -15,7 +15,7 @@ class GradesController < ApplicationController
   def index
     if teacher_logged_in?
       @course=Course.find_by_id(params[:course_id])
-      @grades=@course.grades
+      @grades=@course.grades.where(favorite: false)
       
        #gaolu16增加统计成绩
       count_student_grade(@grades)
