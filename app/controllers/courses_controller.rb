@@ -76,8 +76,9 @@ end
   #-------------------------for students----------------------
   def list_all
     @course=Course.all
+    #########修复重复选课问题###########
     @course=@course-current_user.courses
-end
+  end
 
 def list
     @q1=params[:name]
