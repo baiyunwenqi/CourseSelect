@@ -115,7 +115,16 @@ end
         redirect_to courses_path, flash: flash         
     end
 end
-  
+
+def quit
+    @course=Course.find_by_id(params[:id])
+    current_user.courses.delete(@course)
+    @course.student_num -=1
+    @course.save
+    flash={:success => "成功退选课程: #{@course.name}"}
+    redirect_to courses_path, flash: flash
+end
+  #-------------------------收藏夹相关----------------------
   
 def add_favorite
   @course=Course.find_by_id(params[:id])
@@ -156,15 +165,14 @@ def from_f
   redirect_to courses_path, flash: flash
 end
 
-def quit
-    @course=Course.find_by_id(params[:id])
-    current_user.courses.delete(@course)
-    @course.student_num -=1
-    @course.save
-    flash={:success => "成功退选课程: #{@course.name}"}
-    redirect_to courses_path, flash: flash
-    
+def conflict_f
+  @grades=current_user.grades.where(:favorite=>"true")
+  if @grades.length==0
+  flash={:success => "未收藏任何课程"}
+  end
+  redirect_to list_favorite_courses_path,flash: flash
 end
+
 
   #-------------------------for both teachers and students----------------------
 

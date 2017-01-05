@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get :show_owned
       get :list_favorite
       get :from_f
+      get :conflict_f
     end
   end
 

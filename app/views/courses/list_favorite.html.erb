@@ -14,7 +14,7 @@
           <!-- 增加课程表功能-->
           <div class="panel panel-primary">
            <% if student_logged_in? %>
-              <%= link_to "课程表" ,show_owned_courses_path(@course),class: 'btn-sm btn-danger' , style: 'float:right;margin-top:10px;margin-right:60px'%>
+              <%= link_to "课程冲突分析" ,conflict_f_courses_path(@course),class: 'btn-sm btn-danger' , style: 'float:right;margin-top:10px;margin-right:60px'%>
           <% end%>
           </div>
           <!-- 统计总学分 -->
