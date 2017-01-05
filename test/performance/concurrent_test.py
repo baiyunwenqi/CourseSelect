@@ -62,11 +62,10 @@ def login():
 
 if __name__ == '__main__':
     threads = []
-    number = 5
+    number = 120
     try:
         for i in range(number):
-            t = Performance_test()
-            # t = threading.Thread(target=Performance_test.login(pt))
+            t = threading.Thread(target=login)
             threads.append(t)
 
         for t in threads:
@@ -76,4 +75,4 @@ if __name__ == '__main__':
             t.join()
         print("all threads finish!!")
     except Exception as e:
-        print("some thread failed!!")git 
+        print("some thread failed!!")
