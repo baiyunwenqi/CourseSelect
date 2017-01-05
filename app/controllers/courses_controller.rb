@@ -101,18 +101,54 @@ def list
     @course=@course_true
 end
 
-  def select
+def select
     @course=Course.find_by_id(params[:id])
-    @course.student_num=@course.grades.length
-    if @course.limit_num.nil?|| @course.student_num<@course.limit_num
-        current_user.courses<<@course
-        @course.student_num+=1
-        @course.save
-       flash={:success => "成功选择课程: #{@course.name}"}
-       redirect_to courses_path, flash: flash
+    @course.student_num=@course.grades.where(favorite: false).length
+    @grades=current_user.grades.where(favorite: false)
+    flag=false
+    flag1=false
+    flag2=false
+    @grades.each do|nowcourse|
+        if nowcourse.course.name==@course.name
+          flag=true
+          break
+        end
+
+        if nowcourse.course.course_time[1]==@course.course_time[1]
+            time1 = (nowcourse.course.course_time[3].to_i..nowcourse.course.course_time[4..5].to_i).to_a
+            time2 = (@course.course_time[3].to_i..@course.course_time[4..5].to_i).to_a
+          if (time1 & time2)!=[]
+            flag1=true
+            break
+          end
+        end
+    end
+    if (@course.limit_num > @course.student_num) ||  (@course.limit_num == 0)
+      flag2=true
+    end
+
+    if flag==false
+        if flag1==false and flag2==true
+  
+            @course.student_num += 1
+            @course.save
+            current_user.courses<< @course  ##把该用户的课程信息添加到表示当前用户变量的
+                                       ##current_user中 方便之后使用。
+            flash={:success => "成功选择课程: #{@course.name}"}
+            redirect_to courses_path, flash: flash
+        else
+            flash={:danger =>"#{@course.name} 选课失败，课程选课时间冲突，请选择其他课程! "}
+            redirect_to courses_path, flash: flash
+        end
+
     else
-        flash={danger: "当前课程已满，请选择其他课程: #{@course.name}"}
-        redirect_to courses_path, flash: flash         
+        if flag==true
+          flash={:danger =>"#{@course.name} 选课失败，同课程名冲突，请选择其他课程! "}
+          redirect_to courses_path, flash: flash
+        elsif flag2==false
+                  flash={:warning => "选课人数已满: #{@course.name} 无法选课" }
+                  redirect_to courses_path, flash: flash
+        end
     end
 end
 
@@ -167,10 +203,29 @@ end
 
 def conflict_f
   @grades=current_user.grades.where(:favorite=>"true")
-  if @grades.length==0
-  flash={:success => "未收藏任何课程"}
-  end
-  redirect_to list_favorite_courses_path,flash: flash
+    if @grades.length==0
+    flash={:danger => "未收藏任何课程"}
+   elsif @grades.length==1
+    flash={:success => "没有时间冲突的课程"}
+   else
+          @grades.each do |grade|
+                     time1 = (grade.course.course_time[3].to_i..grade.course.course_time[4..5].to_i).to_a
+                     week1=grade.course.course_time[1]
+                     name1=grade.course.name
+                     @grades.each do|grade1|
+                          time2 = (grade1.course.course_time[3].to_i..grade1.course.course_time[4..5].to_i).to_a
+                          week2=grade1.course.course_time[1]
+                          name2=grade1.course.name
+                          if name1==name2
+                            next
+                          elsif (time1 & time2)!=[] && week1==week2
+                            flash={:danger => "课程：#{name1}—与—课程：#{name2}——时间有冲突"}
+                            break
+                          end
+                      end
+           end
+    end 
+redirect_to list_favorite_courses_path,flash: flash
 end
 
 
@@ -219,5 +274,6 @@ def course_params
                                    :credit, :limit_num, :class_room, :course_time, :course_week)
 end
 
+#定义一些函数
 
 end

@@ -124,6 +124,7 @@
             <li class="list-group-item">
               <%= link_to grades_path do %>
                   <span class="glyphicon glyphicon-chevron-right"></span> 所有成绩
+                  <span class="label label-info pull-right"><%=current_user.grades.where(favorite: false).length %></span>
               <% end %>
             </li>
         <% end %>
