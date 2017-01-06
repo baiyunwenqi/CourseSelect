@@ -9,10 +9,11 @@ class HomesController < ApplicationController
       log_in user
       params[:session][:remember_me] == '1' ? remember_user(user) : forget_user(user)
       flash= {:info => "欢迎回来:#{user.department} #{user.name} :)"}
+      redirect_to "/homes/index", :flash => flash
     else
       flash= {:danger => '账号或密码错误'}
+      redirect_to root_url, :flash => flash
     end
-    redirect_to root_url, :flash => flash
   end
 
   def new
