@@ -14,22 +14,19 @@ class GradesController < ApplicationController
 
   def index
     if teacher_logged_in?
-      @course=Course.find_by_id(params[:course_id])
-      @grades=@course.grades
-      
-       #gaolu16增加统计成绩
-      count_student_grade(@grades)
-      
+        @course=Course.find_by_id(params[:course_id])
+        @grades=@course.grades.where(favorite: false)
+          #gaolu16增加统计成绩
+      #  @grade_true=Array.new
+        #@grades.each do |every_grades|
+        #if every_grades.grade then
+        #   @grade_true.push every_grades
+       # end
+       # @grade_true
+         #gaolu16增加统计成绩
+     # @our_grade=count_student_grade(@grade_true)
     elsif student_logged_in?
-      @grades=current_user.grades
-        #gaolu16增加统计成绩
-      @grade_true=Array.new
-      @grades.each do |every_grades|
-      if every_grades.grade then
-         @grade_true.push every_grades
-      end
-    end 
-    @grades=@grade_true
+      @grades=current_user.grades.where(favorite: false)
     else
       redirect_to root_path, flash: {:warning=>"请先登陆"}
     end
