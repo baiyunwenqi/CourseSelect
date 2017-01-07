@@ -79,7 +79,7 @@ end
     @course=@course.where(open: true)
     @course=@course-current_user.courses
   end
-
+  
 def list
     @course=Course.all - current_user.courses
     @course_true=Array.new
