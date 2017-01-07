@@ -4,40 +4,64 @@
   <div class="row">
     <div class="col-md-8 style="background-color: #CAFFFF;padding-bottom: 40px;padding-top: 10px">
       <div style="font-size: 40px; padding-left: 10px">
-        <%= image_tag "profile1.jpg" %>
+        <%= image_tag "profile3.jpg" %>
       </div>
     </div>
 
-    <div class="col-md-4">
-      <h1>国科大选课系统</h1>
-      <p>这个样本系统是基于国科大研究生课程(高级软件工程)开发的项目,目的是小组成员利用系统学习RoR(Ruby on Rails)</p>
-      <p>新增加的主要功能有:</p>
-      <ul>
 
-        <li class="text-danger">
-          收藏夹功能
-        </li>
-        <li class="text-danger">
-          学生课表
-        </li>
-        <li class="text-danger">
-          自定义管理员后台
-        </li>
-        <li class="text-danger">
-          教师查询
-        </li>
-        <li class="text-danger">
-          Excel格式的数据导入
-        </li>
-        <li class="text-danger">
-          对于Bug的修复
-        </li>
-      </ul>
-  </div>
+
+  
+  <div class="col-md-4">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h4><span class="glyphicon glyphicon-lock"></span> 登录</h4>
+      </div>
+      
+      
+      <div class="row">
+      <div class="content-main">
+      <div class="panel-heading">
+        <%= form_for(:session, url: sessions_login_path, method: :post, html: {role: 'form'}) do |f| %>
+            <div class="form-group">
+              <%= f.label :email, "账号密码登陆" %>
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                <%= f.email_field :email, class: 'form-control', placeholder: "输入邮箱" %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                <%= f.password_field :password, class: 'form-control', placeholder: "输入密码" %>
+              </div>
+            </div>
+
+            <div class="checkbox">
+              <label><%= f.check_box :remember_me %>记住我</label>
+            </div>
+
+            <%= button_tag(type: "submit", class: "btn btn-success btn-block") do %>
+                <span class="glyphicon glyphicon-off"></span>登陆
+            <% end %>
+
+        <% end %>
+      </div>
+      </div>
+      </div>
+      
+
+      <div class="panel-footer">
+        <p>没有账号?
+          <%= link_to "注册", new_user_path %>
+        </p>
+      </div>
     </div>
   </div>
-  <hr>
+</div>
 
+  
+  
   
 
   <div class="row">
