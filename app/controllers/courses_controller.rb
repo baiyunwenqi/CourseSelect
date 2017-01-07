@@ -75,8 +75,8 @@ end
   
   #-------------------------for students----------------------
   def list_all
+    @course=Course.all
     #########修复重复选课问题###########
-    @course=Course.where(:open=>false)
     @course=@course-current_user.courses
   end
 
@@ -193,7 +193,7 @@ def quit_f
     flash={:success => "成功从收藏夹去掉课程: #{@course.name}"}
     redirect_to list_favorite_courses_path, flash: flash
 end
-
+#liwenqi 增加从收藏夹导入课程功能
 def from_f
   @grades=current_user.grades
   @grades.each do |grade|
@@ -202,7 +202,7 @@ def from_f
   flash={:success => "成功导入"}
   redirect_to courses_path, flash: flash
 end
-
+#liwenqi 增加收藏夹内课程时间冲突问题
 def conflict_f
   @grades=current_user.grades.where(:favorite=>"true")
     if @grades.length==0
@@ -210,22 +210,30 @@ def conflict_f
    elsif @grades.length==1
     flash={:success => "没有时间冲突的课程"}
    else
+          count=0
           @grades.each do |grade|
                      time1 = (grade.course.course_time[3].to_i..grade.course.course_time[4..5].to_i).to_a
                      week1=grade.course.course_time[1]
                      name1=grade.course.name
-                     @grades.each do|grade1|
-                          time2 = (grade1.course.course_time[3].to_i..grade1.course.course_time[4..5].to_i).to_a
-                          week2=grade1.course.course_time[1]
-                          name2=grade1.course.name
-                          if name1==name2
-                            next
-                          elsif (time1 & time2)!=[] && week1==week2
-                            flash={:danger => "课程：#{name1}—与—课程：#{name2}——时间有冲突"}
-                            break
+                     code1=grade.course.course_code
+                     #@grades.each do|grade1|
+                     for i in (0..@grades.length-1)
+                          time2 = (@grades[i].course.course_time[3].to_i..@grades[i].course.course_time[4..5].to_i).to_a
+                          week2=@grades[i].course.course_time[1]
+                          name2=@grades[i].course.name
+                          code2=@grades[i].course.course_code
+                          if code1==code2
+                             count=count
+                            elsif (time1 & time2)!=[] && week1==week2
+                              flash={:danger => "(#{name1})与(#{name2})时间有冲突"}
+                              count+=1
+                              break
                           end
                       end
            end
+           if count==0
+              flash={:success => "没有时间冲突的课程"}
+            end
     end 
 redirect_to list_favorite_courses_path,flash: flash
 end
@@ -276,6 +284,5 @@ def course_params
                                    :credit, :limit_num, :class_room, :course_time, :course_week)
 end
 
-#定义一些函数
 
 end
