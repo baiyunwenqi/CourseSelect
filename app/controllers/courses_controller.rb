@@ -79,7 +79,7 @@ end
     @course=Course.where(:open=>false)
     @course=@course-current_user.courses
   end
-
+  
 def list
     @q1=params[:name]
   # @q2=params[:course_type]
