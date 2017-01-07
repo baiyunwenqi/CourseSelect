@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   #   resources :products
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  root 'homes#index'
+  root 'homes#first_index'
 
   resources :courses do
     member do
@@ -41,6 +41,8 @@ Rails.application.routes.draw do
 
   resources :grades, only: [:index, :update]
   resources :users
+  
+  get 'homes/index' => 'homes#index'
 
   get 'sessions/login' => 'sessions#new'
   post 'sessions/login' => 'sessions#create'
