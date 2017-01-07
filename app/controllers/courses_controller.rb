@@ -76,40 +76,40 @@ end
   #-------------------------for students----------------------
   def list_all
     @course=Course.all
-    #########修复重复选课问题###########
+    @course=@course.where(open: true)
     @course=@course-current_user.courses
   end
 
 def list
+    @course=Course.all - current_user.courses
+    @course_true=Array.new
+    @course.each do |every_course|
+      if every_course.open then
+         @course_true.push every_course
+      end
+    end 
+    @course=@course_true
     @q1=params[:name]
   # @q2=params[:course_type]
     if @q1.nil? == false 
-      @course = Course.where("name like '#{@q1}' ")
-     else
-      @course=Course.all
+      @course = Course.all.where("name like '#{@q1}' ")
     end
     #if @q2.nil? == false  
      # @course = Course.where("course_type like '#{@q2}' ")
     # else
     #  @course=Course.all
     #end
-    @course=@course - current_user.courses
-    @course_true=Array.new
-    @course.each do |every_course|
-      if every_course.open_was then
-         @course_true.push every_course
-      end
-    end 
-    @course=@course_true
+    
+    
 end
 
 def select
     @course=Course.find_by_id(params[:id])
     @course.student_num=@course.grades.where(favorite: false).length
     @grades=current_user.grades.where(favorite: false)
-    flag=false
+    flag=false 
     flag1=false
-    flag2=false
+    conflict_warning=""
     @grades.each do|nowcourse|
         if nowcourse.course.name==@course.name
           flag=true
@@ -121,16 +121,15 @@ def select
             time2 = (@course.course_time[3].to_i..@course.course_time[4..5].to_i).to_a
           if (time1 & time2)!=[]
             flag1=true
+            conflict_warning=conflict_warning+"#{@course.name} 与#{nowcourse.course.name} 时间冲突，请选择其他课程! "
             break
           end
         end
     end
-    if (@course.limit_num > @course.student_num) ||  (@course.limit_num == 0)
-      flag2=true
-    end
+
 
     if flag==false
-        if flag1==false and flag2==true
+        if flag1==false 
   
             @course.student_num += 1
             @course.save
@@ -139,7 +138,7 @@ def select
             flash={:success => "成功选择课程: #{@course.name}"}
             redirect_to courses_path, flash: flash
         else
-            flash={:danger =>"#{@course.name} 选课失败，课程选课时间冲突，请选择其他课程! "}
+            flash={:danger =>"#{conflict_warning}"}
             redirect_to courses_path, flash: flash
         end
 
@@ -147,9 +146,6 @@ def select
         if flag==true
           flash={:danger =>"#{@course.name} 选课失败，同课程名冲突，请选择其他课程! "}
           redirect_to courses_path, flash: flash
-        elsif flag2==false
-                  flash={:warning => "选课人数已满: #{@course.name} 无法选课" }
-                  redirect_to courses_path, flash: flash
         end
     end
 end
@@ -211,28 +207,33 @@ def conflict_f
     flash={:success => "没有时间冲突的课程"}
    else
           count=0
-          @grades.each do |grade|
-                     time1 = (grade.course.course_time[3].to_i..grade.course.course_time[4..5].to_i).to_a
-                     week1=grade.course.course_time[1]
-                     name1=grade.course.name
-                     code1=grade.course.course_code
-                     #@grades.each do|grade1|
-                     for i in (0..@grades.length-1)
+          message="\n"
+          l=@grades.length
+            for index in (0..l-2)
+                     time1 = (@grades[index].course.course_time[3].to_i..@grades[index].course.course_time[4..5].to_i).to_a
+                     week1=@grades[index].course.course_time[1]
+                     name1=@grades[index].course.name
+                     code1=@grades[index].course.course_code
+                     #@@grades[index]s.each do|grade1|
+                     for i in ((index+1)..l-1)
                           time2 = (@grades[i].course.course_time[3].to_i..@grades[i].course.course_time[4..5].to_i).to_a
                           week2=@grades[i].course.course_time[1]
                           name2=@grades[i].course.name
                           code2=@grades[i].course.course_code
                           if code1==code2
                              count=count
-                            elsif (time1 & time2)!=[] && week1==week2
-                              flash={:danger => "(#{name1})与(#{name2})时间有冲突"}
+                          elsif (time1 & time2)!=[] && week1==week2
+                              message=message+"(#{name1})与(#{name2})   "
                               count+=1
-                              break
                           end
                       end
-           end
+              end
+          
+             message="共有#{count}组课有时间冲突："+"#{message}  " 
            if count==0
               flash={:success => "没有时间冲突的课程"}
+            else
+              flash={:danger => "#{message}"}
             end
     end 
 redirect_to list_favorite_courses_path,flash: flash
